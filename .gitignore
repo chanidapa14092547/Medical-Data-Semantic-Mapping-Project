@@ -1,0 +1,17 @@
+*.npy
+*.parquet
+Mapping_result/snomed_vectors_tmt_biobert_mnli.npy
+Mapping_result/snomed_vectors_tmlt_biobert_mnli.npy
+Mapping_result/snomed_vectors_tmlt_sapbert.npy
+Mapping_result/snomed_vectors_tmt_sapbert.npy
+encode_minilm/TMT_Relation_minilm_query_embeds.npy
+encode_minilm/TMT_Concept_minilm_query_embeds.npy
+encode_minilm/icd10_minilm_ref_texts.npy
+encode_minilm/icd10_minilm_ref_embeds.npy
+.git/objects/33/ba9e86344646ebfce68bd437e232ddec618cf0
+.git/objects/a3/bbc042f66b362d440c778de7d68648c0081216
+.git/objects/1f/40f7e4ce893c53df67030b6476daa710f94f74
+.git/objects/d3/7893a069f154ea7c4fde1ac5519929e9ddbd46
+.git/objects/f1/46039e4771932a79faf1bdc3ccf063e32d176d
+.git/objects/1b/9eb1614100f43db641bf70540a5ae154bd73c7
+.git/objects/15/6d8f30ec23b899ef47ab2e40609b55cdf521db
