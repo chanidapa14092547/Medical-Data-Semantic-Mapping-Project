@@ -1,4 +1,81 @@
-# Medical Data Mapping Project (TMT & TMLT to SNOMED-CT)
+# Medical Data Semantic Mapping Project (TMT & TMLT to SNOMED-CT)
+
+*🇹🇭 [คลิกที่นี่เพื่ออ่านเวอร์ชันภาษาไทย (Click here for Thai version)](#เวอร์ชันภาษาไทย-thai-version)*
+
+## Overview
+This project aims to establish a semantic relationship (mapping) between local Thai healthcare databases and international medical standards. The primary focus is on two core databases:
+1. **TMT (Thai Medicines Terminology)** mapped to **SNOMED-CT**
+2. **TMLT (Thai Medical Laboratory Terminology)** mapped to **SNOMED-CT**
+
+## Data Sources
+1. **SNOMED-CT**: International standard database, provided as compressed tabular files (`.parquet`).
+2. **TMT (Thai Medicines Terminology)**:
+   - `MasterTMT`: Comprehensive drug dataset with distributed details (e.g., drug name, active ingredient, dosage unit).
+   - `Concept` folder: Categorized drug lists (`.xls` for raw data, `.json` for partially structured data).
+   - `Relationship` folder: Internal relationship linkages within the TMT database.
+3. **TMLT (Thai Medical Laboratory Terminology)**:
+   - `Concept` folder: Lab test lists by type (`ITEM` = single test, `PANEL` = test set).
+   - `Relationship` folder: Internal relationship linkages within the TMLT database.
+
+---
+
+## Mapping Guidelines & Objectives
+The mapping process categorizes SNOMED-CT into specific domains to accurately align with TMT and TMLT records:
+
+### 1. TMT (Medicine) Categories
+Can be mapped to the following SNOMED-CT domains:
+- **Substance** 
+- **Medicinal Product** 
+- **Medicinal Product Form**
+- **Clinical Drug**
+
+### 2. TMLT (Laboratory Test) Categories
+Can be mapped to the following SNOMED-CT domains:
+- **Procedure**
+- **Regime/Therapy**
+
+*Note: The initial phase focuses on these two major groups to build a robust Data Pipeline capable of handling additional data domains in the future.*
+
+---
+
+## Pharmaceutical Mapping Protocol (Hierarchical Fallback)
+The primary objective is to map data to the **"most granular/specific"** SNOMED-CT concept possible. If the system cannot find an exact match, it utilizes a Fallback mechanism, moving to broader categories in the following hierarchy:
+
+`Clinical Drug -> Medicinal Product Form -> Medicinal Product -> Substance`
+
+### Example Workflow
+**Input Data:** `"BRUSOFT Ibuprofen 400 mg soft gel capsule"`
+- **Active Ingredient:** Ibuprofen
+- **Dosage:** 400
+- **Unit:** mg
+- **Form:** capsule
+- **Brand:** BRUSOFT
+
+**The mapping sequence operates as follows:**
+
+1. **Clinical Drug Level (Most Granular - Primary Target)** 
+   - *Target search:* `Ibuprofen 400 mg oral capsule`
+   - *SNOMED-CT Concept:* `1275609004 |Product containing precisely ibuprofen 400 milligram/1 each conventional release oral capsule (clinical drug)|`
+   - *(If not found, fallback to Level 2)*
+
+2. **Medicinal Product Form Level (1st Fallback)** 
+   - *Target search:* `Ibuprofen only product in oral dose form`
+   - *SNOMED-CT Concept:* `779527000 |Product containing only ibuprofen in oral dose form (medicinal product form)|`
+
+3. **Medicinal Product Level (2nd Fallback)** 
+   - *Target search:* `Ibuprofen only product`
+   - *SNOMED-CT Concept:* `776287003 |Product containing only ibuprofen (medicinal product)|`
+
+4. **Substance Level (Broadest - Final Target)** 
+   - *Target search:* `Ibuprofen`
+   - *SNOMED-CT Concept:* `387207008 |Ibuprofen (substance)|`
+
+By employing this fallback protocol, the pipeline gracefully handles edge cases where exact dosage or unit matches are unavailable, ensuring that every pharmaceutical entry is logically and accurately mapped to the international standard.
+
+---
+---
+
+# เวอร์ชันภาษาไทย (Thai Version)
 
 ## Overview
 โปรเจกต์นี้มีจุดประสงค์เพื่อสร้างการเชื่อมความสัมพันธ์ (Mapping) ระหว่างฐานข้อมูลทางการแพทย์ของไทย และมาตรฐานสากล โดยเน้นที่ 2 ฐานข้อมูลหลัก:
@@ -38,6 +115,7 @@
 
 ## Protocol การ Mapping กลุ่มข้อมูลยา (Hierarchical Fallback)
 เป้าหมายหลักคือการ Map ข้อมูลไปหา SNOMED-CT ในระดับที่ **"ละเอียดที่สุดก่อน"** หากระบบไม่พบข้อมูลที่ตรงกันเป๊ะ จะทำการถอยระดับ (Fallback) ออกมาในกลุ่มที่กว้างขึ้นเรื่อยๆ ตามลำดับดังนี้:
+
 `Clinical Drug -> Medicinal Product Form -> Medicinal Product -> Substance`
 
 ### ตัวอย่างการทำงาน (Example)
