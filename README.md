@@ -1,6 +1,6 @@
 # Medical Data Semantic Mapping Project (TMT & TMLT to SNOMED-CT)
 
-*🇹🇭 [คลิกที่นี่เพื่ออ่านเวอร์ชันภาษาไทย (Click here for Thai version)](#เวอร์ชันภาษาไทย-thai-version)*
+*[คลิกที่นี่เพื่ออ่านเวอร์ชันภาษาไทย (Click here for Thai version)](#เวอร์ชันภาษาไทย-thai-version)*
 
 ## Overview
 This project aims to establish a semantic relationship (mapping) between local Thai healthcare databases and international medical standards. The primary focus is on two core databases:
